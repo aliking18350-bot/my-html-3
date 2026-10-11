@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون تعاملی ریاضی‌بندر</title>
+    <style>
+        /* ========== RESET & BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --success-bg: #f0fdf4;
+            --danger: #dc2626;
+            --danger-light: #fee2e2;
+            --warning: #d97706;
+            --warning-light: #fef3c7;
+            --warning-bg: #fffbeb;
+            --info: #0284c7;
+            --info-light: #e0f2fe;
+            --info-bg: #f0f9ff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 50%, #fefce8 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.7;
+            padding: 16px;
+            direction: rtl;
+        }
+
+        /* ========== LAYOUT ========== */
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        /* ========== HEADER ========== */
+        .app-header {
+            text-align: center;
+            padding: 24px 16px 16px;
+            margin-bottom: 8px;
+        }
+
+        .app-header h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .app-header .subtitle {
+            font-size: 1rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .app-header .tagline {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-section {
+            margin-bottom: 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .progress-info .q-counter {
+            background: var(--primary);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, #7c3aed 100%);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        /* ========== QUESTION CARD ========== */
+        .question-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 20px;
+            animation: slideUp 0.35s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .badge-topic {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .badge-level {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        .badge-difficulty {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 22px;
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        /* ========== OPTIONS ========== */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            background: var(--gray-50);
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+            position: relative;
+        }
+
+        .option-card:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateX(-4px);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .option-card.correct-highlight {
+            border-color: var(--success);
+            background: var(--success-light);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+        }
+
+        .option-card.wrong-highlight {
+            border-color: var(--danger);
+            background: var(--danger-light);
+        }
+
+        .option-card.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-card.correct-highlight.disabled,
+        .option-card.wrong-highlight.disabled {
+            opacity: 1;
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--gray-300);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .option-card.selected .option-letter {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .option-card.correct-highlight .option-letter {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .option-card.wrong-highlight .option-letter {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            flex: 1;
+        }
+
+        /* ========== FEEDBACK BOXES ========== */
+        .feedback-box {
+            padding: 16px 18px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-box.error {
+            background: var(--danger-light);
+            border-right: 4px solid var(--danger);
+            color: #991b1b;
+        }
+
+        .feedback-box.hint {
+            background: var(--info-bg);
+            border-right: 4px solid var(--info);
+            color: #075985;
+        }
+
+        .feedback-box.misconception {
+            background: var(--warning-bg);
+            border-right: 4px solid var(--warning);
+            color: #92400e;
+        }
+
+        .feedback-box.success {
+            background: var(--success-bg);
+            border-right: 4px solid var(--success);
+            color: #166534;
+        }
+
+        .feedback-box .fb-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feedback-box .fb-text {
+            font-weight: 400;
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius-xs);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            min-height: 48px;
+        }
+
+        .btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #15803d;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: #b45309;
+        }
+
+        .btn-danger-outline {
+            background: white;
+            color: var(--danger);
+            border: 2px solid var(--danger);
+        }
+
+        .btn-danger-outline:hover:not(:disabled) {
+            background: var(--danger-light);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
+
+        /* ========== NAVIGATION ========== */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .nav-buttons .btn {
+            flex: 1;
+        }
+
+        /* ========== RESULT PAGE ========== */
+        .result-page {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .score-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+            border-radius: var(--radius);
+            padding: 36px 24px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .score-hero .score-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-hero .score-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .score-hero .score-percent {
+            font-size: 1.3rem;
+            font-weight: 700;
+            opacity: 0.95;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 18px 14px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--gray-300);
+        }
+
+        .stat-card.green {
+            border-top-color: var(--success);
+        }
+
+        .stat-card.red {
+            border-top-color: var(--danger);
+        }
+
+        .stat-card.orange {
+            border-top-color: var(--warning);
+        }
+
+        .stat-card.blue {
+            border-top-color: var(--primary);
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gray-800);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.82rem;
+            color: var(--gray-500);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .analysis-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .analysis-section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analysis-section h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .topic-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .topic-tag.good {
+            background: var(--success-light);
+            color: #166534;
+        }
+
+        .topic-tag.weak {
+            background: var(--danger-light);
+            color: #991b1b;
+        }
+
+        .misconception-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--warning-bg);
+            border-radius: var(--radius-xs);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .misconception-item .count {
+            font-weight: 700;
+            color: var(--warning);
+            background: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        /* ========== CHART ========== */
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 16px;
+            height: 200px;
+            padding: 20px 0;
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 4px;
+        }
+
+        .chart-bar.green {
+            background: linear-gradient(180deg, #22c55e, #16a34a);
+        }
+
+        .chart-bar.light-green {
+            background: linear-gradient(180deg, #86efac, #4ade80);
+        }
+
+        .chart-bar.red {
+            background: linear-gradient(180deg, #f87171, #dc2626);
+        }
+
+        .chart-bar.gray {
+            background: linear-gradient(180deg, #d1d5db, #9ca3af);
+        }
+
+        .chart-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .chart-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: scaleIn 0.25s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-box h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--gray-800);
+        }
+
+        .modal-box p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        /* ========== UTILITIES ========== */
+        .hidden {
+            display: none !important;
+        }
+
+        .mt-12 {
+            margin-top: 12px;
+        }
+
+        .mt-16 {
+            margin-top: 16px;
+        }
+
+        .mb-12 {
+            margin-bottom: 12px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+
+            .app-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .question-card {
+                padding: 20px 16px;
+            }
+
+            .question-text {
+                font-size: 1.05rem;
+            }
+
+            .option-card {
+                padding: 14px;
+            }
+
+            .option-text {
+                font-size: 0.92rem;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.88rem;
+                min-height: 44px;
+            }
+
+            .score-hero .score-number {
+                font-size: 2.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-container {
+                gap: 8px;
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .option-letter {
+                width: 30px;
+                height: 30px;
+                min-width: 30px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ========== PRINT ========== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .app-header .tagline,
+            .nav-buttons,
+            .btn-group,
+            .btn,
+            .modal-overlay,
+            .progress-section {
+                display: none !important;
+            }
+
+            .question-card,
+            .analysis-section,
+            .stat-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+
+            .score-hero {
+                background: #2563eb !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .chart-bar {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app">
+        <!-- ===== HEADER ===== -->
+        <header class="app-header">
+            <h1>آزمون تعاملی ریاضی‌بندر</h1>
+            <div class="subtitle">آزمون تشخیصی ریاضی</div>
+            <div class="tagline">یاد بگیر، بهتر باش، آینده‌ساز شو</div>
+        </header>
+
+        <!-- ===== RESUME MODAL ===== -->
+        <div class="modal-overlay hidden" id="resumeModal">
+            <div class="modal-box">
+                <h3>📋 آزمون ناتمام</h3>
+                <p>یک آزمون ناتمام پیدا شد. آیا می‌خواهید ادامه دهید؟</p>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="resumeBtn">ادامه آزمون</button>
+                    <button class="btn btn-outline" id="newTestBtn">شروع آزمون جدید</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CONFIRM RESTART MODAL ===== -->
+        <div class="modal-overlay hidden" id="confirmModal">
+            <div class="modal-box">
+                <h3>⚠️ شروع دوباره</h3>
+                <p>آیا مطمئن هستید؟ تمام پاسخ‌ها و وضعیت‌ها پاک خواهند شد و آزمون از ابتدا شروع می‌شود.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-danger-outline" id="confirmRestartBtn">بله، شروع دوباره</button>
+                    <button class="btn btn-outline" id="cancelRestartBtn">انصراف</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== EXAM VIEW ===== -->
+        <div id="examView">
+            <!-- Progress -->
+            <div class="progress-section">
+                <div class="progress-info">
+                    <span class="q-counter" id="qCounter">سؤال ۱ از ۱۵</span>
+                    <span id="answeredCount">پاسخ‌داده: ۰</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="question-card" id="questionCard">
+                <div class="question-meta" id="questionMeta"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+                <div id="feedbackArea"></div>
+                <div class="btn-group" id="actionButtons"></div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <button class="btn btn-outline" id="prevBtn">◀ سؤال قبلی</button>
+                <button class="btn btn-warning btn-sm" id="skipBtn">رد کردن سؤال</button>
+                <button class="btn btn-outline" id="nextBtn">سؤال بعدی ▶</button>
+            </div>
+            <div class="text-center mt-16">
+                <button class="btn btn-danger-outline" id="finishExamBtn">پایان آزمون و مشاهده نتیجه</button>
+            </div>
+        </div>
+
+        <!-- ===== RESULT VIEW ===== -->
+        <div id="resultView" class="hidden result-page">
+            <!-- Will be rendered dynamically -->
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  SECTION 1: CONFIGURATION & DATA
+        // ================================================================
+
+        const settings = {
+            randomizeQuestions: false,   // ترتیب سؤال‌ها ثابت (قابل تغییر)
+            randomizeOptions: true,      // گزینه‌ها به هم ریخته شوند
+            allowSkip: true,             // اجازه رد کردن سؤال
+            attemptsPerQuestion: 2       // حداکثر دو بار پاسخ
+        };
+
+        // ---------- QUESTION BANK ----------
+        // ساختار هر سؤال دقیقاً مطابق خواسته پرامپت
+        // برای افزودن سؤال جدید فقط به این آرایه اضافه کنید.
+
+        const questions = [
+            // ===== سؤال ۱ =====
+            {
+                id: 1,
+                question: "چهار دانش‌آموز هر کدام یک عدد را انتخاب کرده‌اند:\nکدام دانش‌آموز عددی را انتخاب کرده است که اول است؟",
+                options: [
+                    "علی: ۵۱",
+                    "سارا: ۵۷",
+                    "مهدی: ۶۱",
+                    "نرگس: ۶۹"
+                ],
+                correctAnswer: 2, // مهدی: 61
+                explanation: "عدد اول عددی است که فقط دو مقسوم‌علیه دارد: ۱ و خودش.\n- ۵۱ = ۳ × ۱۷ (مرکب)\n- ۵۷ = ۳ × ۱۹ (مرکب)\n- ۶۱ فقط بر ۱ و ۶۱ بخش‌پذیر است. پس ۶۱ عدد اول است.\n- ۶۹ = ۳ × ۲۳ (مرکب)",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "فرد بودن = اول بودن",
+                        explanation: "دانش‌آموز احتمالاً هر عدد فرد را اول می‌داند. ۵۱ فرد است اما ۵۱ = ۳ × ۱۷، پس مرکب است."
+                    },
+                    {
+                        option: 1,
+                        title: "بررسی نکردن بخش‌پذیری بر ۳",
+                        explanation: "دانش‌آموز فقط بر ۲ بخش‌پذیری را بررسی کرده است. ۵۷ فرد است اما ۵۷ = ۳ × ۱۹، پس مرکب است."
+                    },
+                    {
+                        option: 3,
+                        title: "عدد فرد را اول پنداشتن",
+                        explanation: "دانش‌آموز احتمالاً هر عدد فرد را اول می‌داند. ۶۹ فرد است اما ۶۹ = ۳ × ۲۳، پس مرکب است."
+                    }
+                ],
+                hints: [
+                    "به یاد بیاور: عدد اول فقط دو مقسوم‌علیه دارد. آیا همه اعداد فرد این ویژگی را دارند؟",
+                    "برای هر عدد فرد، بررسی کن که بر ۳ یا ۵ یا ۷ بخش‌پذیر است یا نه."
+                ],
+                cognitiveLevel: "Knowing",
+                topic: "عدد و توان",
+                difficulty: "آسان"
+            },
+            // ===== سؤال ۲ =====
+            {
+                id: 2,
+                question: "یک قفل با عدد سه‌رقمی باز می‌شود. عدد رمز ویژگی‌های زیر را دارد:\n• هر سه رقم آن متفاوت‌اند.\n• حاصل‌ضرب سه رقم، ۳۰ است.\n• هر سه رقم عدد اول‌اند.\nکدام گزینه می‌تواند رمز قفل باشد؟",
+                options: [
+                    "۲۳۵",
+                    "۱۵۶",
+                    "۲۵۷",
+                    "۲۱۵"
+                ],
+                correctAnswer: 0, // 235
+                explanation: "شرایط را بررسی می‌کنیم:\n- ۲۳۵: ارقام ۲، ۳، ۵ متفاوت‌اند. حاصل‌ضرب: ۲×۳×۵=۳۰. هر سه رقم (۲، ۳، ۵) عدد اول‌اند. ✔\n- ۱۵۶: ۶ عدد اول نیست. ✘\n- ۲۵۷: حاصل‌ضرب ۲×۵×۷=۷۰، نه ۳۰. ✘\n- ۲۱۵: حاصل‌ضرب ۲×۱×۵=۱۰، نه ۳۰. ✘",
+                misconceptions: [
+                    {
+                        option: 1,
+                        title: "بی‌توجهی به اول بودن رقم‌ها",
+                        explanation: "دانش‌آموز فقط حاصل‌ضرب ۱×۵×۶=۳۰ را دیده اما توجه نکرده که ۶ عدد اول نیست."
+                    },
+                    {
+                        option: 2,
+                        title: "بی‌توجهی به حاصل‌ضرب",
+                        explanation: "دانش‌آموز به اول بودن ارقام (۲، ۵، ۷) توجه کرده اما حاصل‌ضرب ۲×۵×۷=۷۰ را محاسبه نکرده است."
+                    },
+                    {
+                        option: 3,
+                        title: "اشتباه در محاسبه حاصل‌ضرب",
+                        explanation: "دانش‌آموز حاصل‌ضرب ۲×۱×۵ را ۳۰ محاسبه کرده در حالی که ۲×۱×۵=۱۰ است. همچنین ۱ عدد اول نیست."
+                    }
+                ],
+                hints: [
+                    "ابتدا اعداد اول یک‌رقمی را فهرست کن: ۲، ۳، ۵، ۷. سپس ببین کدام سه‌تایی حاصل‌ضربشان ۳۰ می‌شود.",
+                    "حاصل‌ضرب ۳۰ را به عوامل اول تجزیه کن: ۳۰ = ۲ × ۳ × ۵. پس ارقام باید دقیقاً ۲، ۳ و ۵ باشند."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "عدد و توان",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۳ =====
+            {
+                id: 3,
+                question: "سارا می‌گوید: «برای اینکه بفهمم یک عدد اول است، کافی است بررسی کنم که عدد فرد باشد.»\nمعلم چهار عدد زیر را به او می‌دهد: ۲۹، ۳۵، ۴۱، ۵۱\nکدام گزینه بهترین دلیل برای نادرست بودن روش سارا است؟",
+                options: [
+                    "۲۹ زوج نیست.",
+                    "۳۵ بر ۵ بخش‌پذیر است.",
+                    "۴۱ از ۳۵ بزرگ‌تر است.",
+                    "۵۱ فرد است."
+                ],
+                correctAnswer: 1, // 35 بر 5 بخش‌پذیر است
+                explanation: "برای رد یک گزاره کلی، یک مثال نقض کافی است. سارا می‌گوید «هر عدد فرد، اول است.»\nعدد ۳۵ یک عدد فرد است اما ۳۵ = ۵ × ۷، پس مرکب است. بنابراین ۳۵ مثال نقضی است که نشان می‌دهد فرد بودن به معنی اول بودن نیست.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "تمرکز بر زوج بودن",
+                        explanation: "دانش‌آموز به جای یافتن مثال نقض برای گزاره «هر فرد اول است»، به زوج بودن ۲۹ اشاره کرده که ربطی به رد گزاره ندارد."
+                    },
+                    {
+                        option: 2,
+                        title: "مقایسه بزرگی اعداد",
+                        explanation: "دانش‌آموز به جای بررسی اول بودن، اندازه اعداد را مقایسه کرده است. بزرگ‌تر بودن ۴۱ از ۳۵ هیچ ربطی به اول بودن ندارد."
+                    },
+                    {
+                        option: 3,
+                        title: "تأیید به جای رد",
+                        explanation: "دانش‌آموز ۵۱ را مثال زده اما ۵۱ خودش مرکب است (۵۱ = ۳ × ۱۷) و اول نیست. این گزینه دلیل نادرستی روش سارا را نشان نمی‌دهد."
+                    }
+                ],
+                hints: [
+                    "برای رد یک ادعا، باید یک مثال نقض پیدا کنی: عددی که فرد باشد اما اول نباشد.",
+                    "کدام یک از اعداد ۲۹، ۳۵، ۴۱، ۵۱ فرد است ولی می‌توان آن را به صورت حاصل‌ضرب دو عدد بزرگ‌تر از ۱ نوشت؟"
+                ],
+                cognitiveLevel: "Reasoning",
+                topic: "عدد و توان",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۴ =====
+            {
+                id: 4,
+                question: "سه عدد زیر را در نظر بگیرید: ۱۰۵، ۸۴، ؟\nهر سه عدد باید دقیقاً سه عامل اول متمایز داشته باشند.\nکدام گزینه می‌تواند عدد گمشده باشد؟",
+                options: [
+                    "۱۸",
+                    "۳۰",
+                    "۴۰",
+                    "۴۹"
+                ],
+                correctAnswer: 1, // 30
+                explanation: "ابتدا اعداد داده‌شده را تجزیه می‌کنیم:\n- ۱۰۵ = ۳ × ۵ × ۷ (سه عامل اول متمایز) ✔\n- ۸۴ = ۲ × ۲ × ۳ × ۷ → عوامل اول متمایز: ۲، ۳، ۷ (سه عامل متمایز) ✔\nحال گزینه‌ها:\n- ۱۸ = ۲ × ۳ × ۳ → عوامل متمایز: ۲ و ۳ (فقط دو عامل) ✘\n- ۳۰ = ۲ × ۳ × ۵ → سه عامل متمایز (۲، ۳، ۵) ✔\n- ۴۰ = ۲ × ۲ × ۲ × ۵ → عوامل متمایز: ۲ و ۵ (دو عامل) ✘\n- ۴۹ = ۷ × ۷ → فقط یک عامل متمایز (۷) ✘",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "عوامل تکراری را متمایز حساب کردن",
+                        explanation: "دانش‌آموز ۱۸ = ۲ × ۳ × ۳ را دارای سه عامل اول متمایز دانسته، در حالی که ۳ دو بار تکرار شده و فقط دو عامل متمایز (۲ و ۳) وجود دارد."
+                    },
+                    {
+                        option: 2,
+                        title: "اشتباه در شمارش عوامل متمایز",
+                        explanation: "دانش‌آموز ۴۰ = ۲ × ۲ × ۲ × ۵ را دارای سه عامل متمایز پنداشته، اما عوامل متمایز آن فقط ۲ و ۵ هستند."
+                    },
+                    {
+                        option: 3,
+                        title: "تمرکز بر مربع کامل بودن",
+                        explanation: "دانش‌آموز به جای شمردن عوامل اول متمایز، به مربع کامل بودن ۴۹ توجه کرده است. ۴۹ فقط یک عامل اول متمایز دارد."
+                    }
+                ],
+                hints: [
+                    "کلمه «متمایز» یعنی هر عامل فقط یک بار شمرده می‌شود، حتی اگر چند بار در تجزیه ظاهر شود.",
+                    "عدد ۳۰ را تجزیه کن: ۳۰ = ۲ × ۳ × ۵. آیا هر سه عامل با هم متفاوتند؟"
+                ],
+                cognitiveLevel: "Applying",
+                topic: "عدد و توان",
+                difficulty: "سخت"
+            },
+            // ===== سؤال ۵ =====
+            {
+                id: 5,
+                question: "در الگوریتم غربال برای پیدا کردن اعداد اول، ابتدا مضرب‌های ۲ حذف می‌شوند.\nچرا خود عدد ۲ را حذف نمی‌کنیم؟",
+                options: [
+                    "چون ۲ از همه عددهای دیگر کوچک‌تر است.",
+                    "چون ۲ مضرب خودش نیست.",
+                    "چون ۲ یک عدد اول است و هدف غربال حذف عددهای مرکب است.",
+                    "چون مضرب‌های ۲ از ۴ شروع می‌شوند."
+                ],
+                correctAnswer: 2,
+                explanation: "در الگوریتم غربال، هدف پیدا کردن اعداد اول است. ما مضرب‌های هر عدد اول را حذف می‌کنیم تا اعداد مرکب حذف شوند. عدد ۲ خودش اول است، پس نباید حذف شود. فقط مضرب‌های بزرگ‌تر از ۲ (یعنی ۴، ۶، ۸ و ...) حذف می‌شوند.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "ترتیب عددها را دلیل الگوریتم دانستن",
+                        explanation: "دانش‌آموز فکر می‌کند چون ۲ کوچک‌ترین عدد است، حذف نمی‌شود. در حالی که دلیل اصلی، اول بودن ۲ است."
+                    },
+                    {
+                        option: 1,
+                        title: "مفهوم ناقص مضرب",
+                        explanation: "دانش‌آموز فکر می‌کند ۲ مضرب خودش نیست. در حالی که هر عددی مضرب خودش است (۲ = ۲ × ۱). دلیل حذف نشدن ۲، اول بودن آن است."
+                    },
+                    {
+                        option: 3,
+                        title: "شروع مضرب‌ها از ۴",
+                        explanation: "دانش‌آموز به جای دلیل اصلی، به شروع مضرب‌ها از ۴ اشاره کرده. اما این نتیجه‌ی همان دلیل است، نه خود دلیل."
+                    }
+                ],
+                hints: [
+                    "هدف الگوریتم غربال چیست؟ آیا می‌خواهیم اعداد اول را حذف کنیم یا اعداد مرکب را؟",
+                    "عدد ۲ خودش اول است. آیا باید در لیست اعداد اول باقی بماند؟"
+                ],
+                cognitiveLevel: "Knowing",
+                topic: "عدد و توان",
+                difficulty: "آسان"
+            },
+            // ===== سؤال ۶ =====
+            {
+                id: 6,
+                question: "معلم از دانش‌آموزان می‌خواهد تمام عددهای اول بین ۱ و ۵۰ را پیدا کنند.\nکدام روش برای این کار مناسب‌تر و کارآمدتر است؟",
+                options: [
+                    "بررسی تک‌تک عددها و تقسیم هر عدد بر تمام عددهای کوچک‌تر از خودش.",
+                    "استفاده از الگوریتم غربال و حذف مضرب‌های عددهای اول.",
+                    "انتخاب فقط عددهای فرد.",
+                    "انتخاب عددهایی که رقم یکان آن‌ها ۱، ۳، ۵ یا ۷ است."
+                ],
+                correctAnswer: 1,
+                explanation: "الگوریتم غربال یک روش سیستماتیک و کارآمد برای پیدا کردن اعداد اول است. با حذف مضرب‌های اعداد اول (۲، ۳، ۵، ۷ و ...) به‌طور مؤثر اعداد مرکب حذف می‌شوند و اعداد اول باقی می‌مانند. این روش از تقسیم تک‌تک اعداد سریع‌تر و کم‌خطاتر است.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "روش تقسیم‌های تکراری",
+                        explanation: "این روش زمان‌بر و مستعد خطاست. برای هر عدد باید بر تمام اعداد کوچک‌تر تقسیم کرد."
+                    },
+                    {
+                        option: 2,
+                        title: "فرد بودن = اول بودن",
+                        explanation: "همه اعداد فرد اول نیستند (مثل ۹، ۱۵، ۲۱). همچنین عدد ۲ زوج است اما اول است."
+                    },
+                    {
+                        option: 3,
+                        title: "تمرکز بر رقم یکان",
+                        explanation: "رقم یکان معیار قابل اعتمادی برای اول بودن نیست. مثلاً ۵۱ (یکان ۱) مرکب است، ۳۵ (یکان ۵) مرکب است."
+                    }
+                ],
+                hints: [
+                    "کدام روش از حذف سیستماتیک اعداد مرکب استفاده می‌کند؟",
+                    "الگوریتم غربال چگونه کار می‌کند و چرا کارآمدتر است؟"
+                ],
+                cognitiveLevel: "Applying",
+                topic: "عدد و توان",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۷ =====
+            {
+                id: 7,
+                question: "یک دانش‌آموز می‌گوید: «اگر یک عدد اول را با خودش جمع کنیم، حاصل حتماً عدد مرکب است.»\nکدام گزینه بهترین ارزیابی این گفته است؟",
+                options: [
+                    "همیشه درست است، چون حاصل زوج است.",
+                    "همیشه نادرست است، چون حاصل دو برابر عدد اول است.",
+                    "درست است، زیرا حاصل برابر ۲p می‌شود و برای هر عدد اول p، عددی مرکب است.",
+                    "فقط برای عدد ۲ درست است."
+                ],
+                correctAnswer: 2,
+                explanation: "اگر p یک عدد اول باشد، p + p = ۲p. عدد ۲p حداقل سه مقسوم‌علیه دارد: ۱، ۲، p و ۲p. پس قطعاً مرکب است (به جز حالتی که p=۲ باشد که ۲p=۴ و ۴ مرکب است). پس گفته دانش‌آموز درست است و استدلال جبری ۲p آن را اثبات می‌کند.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "استدلال ناقص",
+                        explanation: "دانش‌آموز به زوج بودن حاصل اشاره کرده. زوج بودن کافی نیست؛ مثلاً ۲ زوج است اما اول است. استدلال کامل ۲p بودن است."
+                    },
+                    {
+                        option: 1,
+                        title: "نادرست دانستن بدون دلیل",
+                        explanation: "دانش‌آموز گفته «چون حاصل دو برابر عدد اول است» را دلیلی برای نادرست بودن پنداشته، در حالی که ۲p دقیقاً دلیلی بر مرکب بودن است."
+                    },
+                    {
+                        option: 3,
+                        title: "محدود کردن به p=۲",
+                        explanation: "دانش‌آموز گفته فقط برای ۲ درست است. اما برای هر عدد اول p، حاصل ۲p مرکب است. ۲ حالت خاصی نیست."
+                    }
+                ],
+                hints: [
+                    "اگر عدد اول را p بنامیم، حاصل جمع p + p چیست؟",
+                    "آیا ۲p را می‌توان به صورت حاصل‌ضرب دو عدد بزرگ‌تر از ۱ نوشت؟"
+                ],
+                cognitiveLevel: "Reasoning",
+                topic: "جبر",
+                difficulty: "سخت"
+            },
+            // ===== سؤال ۸ =====
+            {
+                id: 8,
+                question: "در روش غربال برای پیدا کردن اعداد اول کوچک‌تر از ۱۰۰، دانش‌آموزی می‌گوید:\n«بعد از حذف مضرب‌های ۲، ۳ و ۵، دیگر هیچ عدد مرکبی باقی نمی‌ماند.»\nکدام عدد بهترین مثال برای نشان دادن اشتباه اوست؟",
+                options: [
+                    "۷۳",
+                    "۵۳",
+                    "۶۱",
+                    "۴۹"
+                ],
+                correctAnswer: 3,
+                explanation: "عدد ۴۹ = ۷ × ۷، پس مرکب است. اما ۴۹ مضرب ۲ (زوج نیست)، مضرب ۳ (رقم‌هایش ۴+۹=۱۳، بر ۳ بخش‌پذیر نیست)، و مضرب ۵ (یکانش ۹ است) نیست. پس بعد از حذف مضرب‌های ۲، ۳ و ۵ باقی می‌ماند. این نشان می‌دهد باید مضرب‌های اعداد اول بعدی (مثل ۷) را نیز حذف کرد.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "انتخاب عدد اول به جای مرکب",
+                        explanation: "۷۳ خودش عدد اول است، پس مثال مناسبی برای نشان دادن باقی ماندن عدد مرکب نیست."
+                    },
+                    {
+                        option: 1,
+                        title: "انتخاب عدد اول",
+                        explanation: "۵۳ عدد اول است. باقی ماندنش بعد از غربال، اشتباه نیست، بلکه درست است."
+                    },
+                    {
+                        option: 2,
+                        title: "انتخاب عدد اول",
+                        explanation: "۶۱ عدد اول است. مثال باید عددی مرکب باشد که بعد از حذف مضرب‌های ۲، ۳، ۵ باقی می‌ماند."
+                    }
+                ],
+                hints: [
+                    "به دنبال عددی باش که مرکب باشد اما مضرب ۲، ۳ یا ۵ نباشد.",
+                    "عدد ۴۹ را در نظر بگیر: آیا بر ۲، ۳ یا ۵ بخش‌پذیر است؟ حاصل‌ضرب ۷ × ۷ چیست؟"
+                ],
+                cognitiveLevel: "Reasoning",
+                topic: "عدد و توان",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۹ (تکمیلی) =====
+            {
+                id: 9,
+                question: "حاصل عبارت ۲³ × ۲⁴ ÷ ۲⁵ کدام است؟",
+                options: [
+                    "۲",
+                    "۴",
+                    "۸",
+                    "۱۶"
+                ],
+                correctAnswer: 1, // ۴ = ۲²
+                explanation: "در ضرب توان‌های هم‌پایه، توان‌ها جمع می‌شوند: ۲³ × ۲⁴ = ۲⁷.\nدر تقسیم توان‌های هم‌پایه، توان‌ها کم می‌شوند: ۲⁷ ÷ ۲⁵ = ۲² = ۴.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "جمع و تفریق نادرست توان‌ها",
+                        explanation: "دانش‌آموز احتمالاً ۳ + ۴ − ۵ = ۲ را محاسبه کرده اما ۲² = ۴، نه ۲. یا ۲ را با ۲² اشتباه گرفته است."
+                    },
+                    {
+                        option: 2,
+                        title: "اشتباه در محاسبه توان",
+                        explanation: "دانش‌آموز احتمالاً ۲³ = ۸ را به عنوان پاسخ انتخاب کرده، بدون اعمال کامل قوانین توان."
+                    },
+                    {
+                        option: 3,
+                        title: "اشتباه در جمع توان‌ها",
+                        explanation: "دانش‌آموز احتمالاً ۳ + ۴ = ۷ و ۷ − ۵ = ۲ را محاسبه کرده اما ۲² = ۴. یا ۲⁴ = ۱۶ را پاسخ گرفته است."
+                    }
+                ],
+                hints: [
+                    "قانون ضرب توان‌های هم‌پایه: a^m × a^n = a^(m+n).",
+                    "قانون تقسیم توان‌های هم‌پایه: a^m ÷ a^n = a^(m−n)."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "عدد و توان",
+                difficulty: "آسان"
+            },
+            // ===== سؤال ۱۰ (تکمیلی) =====
+            {
+                id: 10,
+                question: "اگر ۳(x − ۲) = ۱۵، مقدار x کدام است؟",
+                options: [
+                    "۳",
+                    "۵",
+                    "۷",
+                    "۹"
+                ],
+                correctAnswer: 2, // ۷
+                explanation: "معادله ۳(x − ۲) = ۱۵ را حل می‌کنیم:\n۳x − ۶ = ۱۵ (توزیع)\n۳x = ۱۵ + ۶ = ۲۱\nx = ۲۱ ÷ ۳ = ۷",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "انتقال علامت نادرست",
+                        explanation: "دانش‌آموز احتمالاً ۳x = ۱۵ − ۶ = ۹ محاسبه کرده، در حالی که ۶ باید به طرف دیگر اضافه شود: ۱۵ + ۶ = ۲۱."
+                    },
+                    {
+                        option: 1,
+                        title: "توزیع نکردن ضریب",
+                        explanation: "دانش‌آموز احتمالاً ۳ را فقط در x ضرب کرده: ۳x − ۲ = ۱۵ → ۳x = ۱۷ → که جواب ۱۷/۳ می‌شود و در گزینه‌ها نیست. یا اشتباه محاسباتی مشابه."
+                    },
+                    {
+                        option: 3,
+                        title: "اشتباه در جمع/تفریق",
+                        explanation: "دانش‌آموز احتمالاً ۱۵ + ۶ را ۲۴ محاسبه کرده و ۲۴ ÷ ۳ = ۸ شود، یا ۱۵ + ۱۲ = ۲۷ ÷ ۳ = ۹."
+                    }
+                ],
+                hints: [
+                    "ابتدا ضریب ۳ را در پرانتز توزیع کن: ۳x − ۶ = ۱۵.",
+                    "عدد ۶ را با تغییر علامت به طرف دیگر منتقل کن: ۳x = ۱۵ + ۶."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "معادله",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۱۱ (تکمیلی) =====
+            {
+                id: 11,
+                question: "مساحت یک مستطیل ۴۸ سانتی‌متر مربع و طول آن ۸ سانتی‌متر است.\nمحیط این مستطیل چند سانتی‌متر است؟",
+                options: [
+                    "۲۴",
+                    "۲۸",
+                    "۳۲",
+                    "۴۰"
+                ],
+                correctAnswer: 1, // 28
+                explanation: "مساحت = طول × عرض → ۴۸ = ۸ × عرض → عرض = ۶ سانتی‌متر.\nمحیط = ۲ × (طول + عرض) = ۲ × (۸ + ۶) = ۲ × ۱۴ = ۲۸ سانتی‌متر.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "اشتباه گرفتن محیط و مساحت",
+                        explanation: "دانش‌آموز احتمالاً ۸ + ۶ + ۸ + ۶ = ۲۸ را ۲۴ محاسبه کرده یا فقط ۸ + ۶ + ۸ + ۶ را اشتباه جمع کرده. یا مستقیماً ۴۸ ÷ ۲ = ۲۴."
+                    },
+                    {
+                        option: 2,
+                        title: "محاسبه محیط بدون عرض",
+                        explanation: "دانش‌آموز احتمالاً ۴۸ ÷ ۸ = ۶ را محاسبه نکرده و ۸ × ۴ = ۳۲ را پاسخ گرفته، بدون در نظر گرفتن عرض."
+                    },
+                    {
+                        option: 3,
+                        title: "اشتباه در فرمول محیط",
+                        explanation: "دانش‌آموز احتمالاً ۴۸ − ۸ = ۴۰ را محاسبه کرده، که هیچ ربطی به محیط ندارد."
+                    }
+                ],
+                hints: [
+                    "ابتدا از فرمول مساحت، عرض را به دست آور: عرض = مساحت ÷ طول.",
+                    "فرمول محیط مستطیل: ۲ × (طول + عرض)."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "هندسه",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۱۲ (تکمیلی) =====
+            {
+                id: 12,
+                question: "قیمت یک کتاب ۴۰,۰۰۰ تومان است. اگر ۲۵٪ تخفیف داده شود، قیمت نهایی چقدر است؟",
+                options: [
+                    "۳۰,۰۰۰ تومان",
+                    "۳۲,۰۰۰ تومان",
+                    "۳۵,۰۰۰ تومان",
+                    "۱۰,۰۰۰ تومان"
+                ],
+                correctAnswer: 0, // 30000
+                explanation: "۲۵٪ از ۴۰,۰۰۰ = ۰٫۲۵ × ۴۰,۰۰۰ = ۱۰,۰۰۰ تومان تخفیف.\nقیمت نهایی = ۴۰,۰۰۰ − ۱۰,۰۰۰ = ۳۰,۰۰۰ تومان.",
+                misconceptions: [
+                    {
+                        option: 1,
+                        title: "محاسبه نادرست درصد",
+                        explanation: "دانش‌آموز احتمالاً ۲۵٪ را ۸,۰۰۰ تومان محاسبه کرده (۲۰٪) یا ۴۰,۰۰۰ − ۸,۰۰۰ = ۳۲,۰۰۰."
+                    },
+                    {
+                        option: 2,
+                        title: "کسر اشتباه",
+                        explanation: "دانش‌آموز احتمالاً ۲۵٪ را ۵,۰۰۰ تومان (۱۲٫۵٪) محاسبه کرده یا ۴۰,۰۰۰ × ۰٫۱۲۵ = ۵,۰۰۰ و ۴۰,۰۰۰ − ۵,۰۰۰ = ۳۵,۰۰۰."
+                    },
+                    {
+                        option: 3,
+                        title: "نمایش مقدار تخفیف به جای قیمت نهایی",
+                        explanation: "دانش‌آموز مقدار تخفیف (۱۰,۰۰۰) را به عنوان قیمت نهایی انتخاب کرده، در حالی که قیمت نهایی ۳۰,۰۰۰ است."
+                    }
+                ],
+                hints: [
+                    "ابتدا مقدار تخفیف را حساب کن: ۲۵٪ از ۴۰,۰۰۰.",
+                    "قیمت نهایی = قیمت اولیه − مقدار تخفیف."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "درصد",
+                difficulty: "آسان"
+            },
+            // ===== سؤال ۱۳ (تکمیلی) =====
+            {
+                id: 13,
+                question: "نسبت تعداد پسران به دختران در یک کلاس ۳ به ۵ است. اگر تعداد دختران ۲۰ نفر باشد،\nتعداد کل دانش‌آموزان کلاس چند نفر است؟",
+                options: [
+                    "۱۲",
+                    "۲۰",
+                    "۳۲",
+                    "۳۵"
+                ],
+                correctAnswer: 2, // 32
+                explanation: "نسبت پسر به دختر = ۳ : ۵. اگر دختران ۲۰ نفر باشند، هر واحد نسبت = ۲۰ ÷ ۵ = ۴ نفر.\nتعداد پسران = ۳ × ۴ = ۱۲ نفر.\nتعداد کل = ۱۲ + ۲۰ = ۳۲ نفر.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "فقط محاسبه تعداد پسران",
+                        explanation: "دانش‌آموز تعداد پسران (۱۲) را محاسبه کرده اما تعداد کل را نپرسیده است."
+                    },
+                    {
+                        option: 1,
+                        title: "اشتباه گرفتن تعداد دختران با کل",
+                        explanation: "دانش‌آموز تعداد دختران (۲۰) را به عنوان کل انتخاب کرده، بدون محاسبه تعداد پسران."
+                    },
+                    {
+                        option: 3,
+                        title: "اشتباه در مفهوم نسبت",
+                        explanation: "دانش‌آموز احتمالاً ۳ + ۵ = ۸ و ۸ × ۴ = ۳۲ را اشتباه محاسبه کرده یا ۲۰ + ۱۵ = ۳۵."
+                    }
+                ],
+                hints: [
+                    "ابتدا مقدار یک واحد نسبت را حساب کن: ۲۰ ÷ ۵ = ۴.",
+                    "تعداد پسران = ۳ × ۴ = ۱۲. حالا تعداد کل را حساب کن."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "نسبت و تناسب",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۱۴ (تکمیلی) =====
+            {
+                id: 14,
+                question: "در یک کیسه ۵ توپ قرمز، ۳ توپ آبی و ۲ توپ سبز وجود دارد.\nاگر یک توپ به تصادف بیرون بیاوریم، احتمال اینکه سبز نباشد چقدر است؟",
+                options: [
+                    "۲/۱۰",
+                    "۳/۱۰",
+                    "۵/۱۰",
+                    "۸/۱۰"
+                ],
+                correctAnswer: 3, // 8/10
+                explanation: "تعداد کل توپ‌ها = ۵ + ۳ + ۲ = ۱۰.\nاحتمال سبز بودن = ۲/۱۰.\nاحتمال سبز نبودن = ۱ − ۲/۱۰ = ۸/۱۰.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "محاسبه احتمال سبز بودن",
+                        explanation: "دانش‌آموز احتمال سبز بودن (۲/۱۰) را به عنوان پاسخ انتخاب کرده، در حالی که سؤال احتمال سبز نبودن را پرسیده است."
+                    },
+                    {
+                        option: 1,
+                        title: "محاسبه احتمال آبی بودن",
+                        explanation: "دانش‌آموز احتمال آبی بودن (۳/۱۰) را محاسبه کرده، نه احتمال سبز نبودن."
+                    },
+                    {
+                        option: 2,
+                        title: "محاسبه احتمال قرمز بودن",
+                        explanation: "دانش‌آموز احتمال قرمز بودن (۵/۱۰) را محاسبه کرده، نه احتمال سبز نبودن."
+                    }
+                ],
+                hints: [
+                    "احتمال سبز نبودن = ۱ − احتمال سبز بودن.",
+                    "ابتدا احتمال سبز بودن را حساب کن، سپس آن را از ۱ کم کن."
+                ],
+                cognitiveLevel: "Applying",
+                topic: "احتمال",
+                difficulty: "متوسط"
+            },
+            // ===== سؤال ۱۵ (تکمیلی) =====
+            {
+                id: 15,
+                question: "نمودار زیر نشان می‌دهد که ۴۰٪ دانش‌آموزان یک مدرسه فوتبال، ۲۵٪ بسکتبال، ۲۰٪ شنا و ۱۵٪ والیبال بازی می‌کنند.\nاگر تعداد کل دانش‌آموزان ۲۰۰ نفر باشد، چند نفر بسکتبال بازی می‌کنند؟",
+                options: [
+                    "۴۰",
+                    "۵۰",
+                    "۸۰",
+                    "۳۰"
+                ],
+                correctAnswer: 1, // 50
+                explanation: "۲۵٪ از ۲۰۰ = ۰٫۲۵ × ۲۰۰ = ۵۰ نفر.",
+                misconceptions: [
+                    {
+                        option: 0,
+                        title: "محاسبه ۲۰٪ به جای ۲۵٪",
+                        explanation: "دانش‌آموز احتمالاً ۲۰٪ (شنا) را محاسبه کرده: ۰٫۲۰ × ۲۰۰ = ۴۰."
+                    },
+                    {
+                        option: 2,
+                        title: "محاسبه ۴۰٪ به جای ۲۵٪",
+                        explanation: "دانش‌آموز احتمالاً ۴۰٪ (فوتبال) را محاسبه کرده: ۰٫۴۰ × ۲۰۰ = ۸۰."
+                    },
+                    {
+                        option: 3,
+                        title: "محاسبه ۱۵٪ به جای ۲۵٪",
+                        explanation: "دانش‌آموز احتمالاً ۱۵٪ (والیبال) را محاسبه کرده: ۰٫۱۵ × ۲۰۰ = ۳۰."
+                    }
+                ],
+                hints: [
+                    "درصد بسکتبال را از نمودار بخوان: ۲۵٪.",
+                    "برای محاسبه تعداد، درصد را به کسر تبدیل کن و در کل ضرب کن: ۰٫۲۵ × ۲۰۰."
+                ],
+                cognitiveLevel: "Reading",
+                topic: "داده و نمودار",
+                difficulty: "آسان"
+            }
+        ];
+
+        // ================================================================
+        //  SECTION 2: STATE MANAGEMENT
+        // ================================================================
+
+        const STORAGE_KEY = 'math_bandar_exam_state_v1';
+
+        let state = {
+            currentIndex: 0,
+            questions: [],
+            answers: {}, // { questionId: { attempts: [], status, selectedOption, hintShown, ... } }
+            finished: false
+        };
+
+        // ================================================================
+        //  SECTION 3: UTILITY FUNCTIONS
+        // ================================================================
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function getQuestionById(id) {
+            return questions.find(q => q.id === id);
+        }
+
+        function getCurrentQuestion() {
+            if (!state.questions.length) return null;
+            return getQuestionById(state.questions[state.currentIndex]);
+        }
+
+        function getAnswerState(qId) {
+            if (!state.answers[qId]) {
+                state.answers[qId] = {
+                    attempts: [],       // { selectedOption, correct }
+                    status: 'unanswered', // unanswered | correct_first | correct_second | wrong | skipped
+                    selectedOption: null,
+                    hintShown: false,
+                    showFullAnswer: false,
+                    answeredAt: null
+                };
+            }
+            return state.answers[qId];
+        }
+
+        function saveState() {
+            try {
+                const serializable = {
+                    currentIndex: state.currentIndex,
+                    questions: state.questions,
+                    answers: state.answers,
+                    finished: state.finished
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable));
+            } catch (e) {
+                console.warn('خطا در ذخیره وضعیت:', e);
+            }
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return false;
+                const parsed = JSON.parse(raw);
+                if (!parsed.questions || !Array.isArray(parsed.questions)) return false;
+                // Validate that question ids exist
+                const validIds = parsed.questions.filter(id => questions.some(q => q.id === id));
+                if (validIds.length === 0) return false;
+                state.currentIndex = parsed.currentIndex || 0;
+                state.questions = validIds;
+                state.answers = parsed.answers || {};
+                state.finished = parsed.finished || false;
+                return true;
+            } catch (e) {
+                console.warn('خطا در بارگذاری وضعیت:', e);
+                return false;
+            }
+        }
+
+        function clearState() {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'unanswered': 'پاسخ داده نشده',
+                'correct_first': 'درست در تلاش اول',
+                'correct_second': 'درست در تلاش دوم',
+                'wrong': 'غلط پس از دو تلاش',
+                'skipped': 'رد شده'
+            };
+            return labels[status] || status;
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'unanswered': 'gray',
+                'correct_first': 'green',
+                'correct_second': 'light-green',
+                'wrong': 'red',
+                'skipped': 'gray'
+            };
+            return colors[status] || 'gray';
+        }
+
+        // ================================================================
+        //  SECTION 4: INITIALIZATION
+        // ================================================================
+
+        function initQuestions() {
+            let ids = questions.map(q => q.id);
+            if (settings.randomizeQuestions) {
+                ids = shuffleArray(ids);
+            }
+            state.questions = ids;
+            state.currentIndex = 0;
+            state.answers = {};
+            state.finished = false;
+        }
+
+        function initExam() {
+            initQuestions();
+            saveState();
+            renderExam();
+        }
+
+        function resumeExam() {
+            // state already loaded
+            renderExam();
+        }
+
+        // ================================================================
+        //  SECTION 5: RENDERING - EXAM VIEW
+        // ================================================================
+
+        function renderExam() {
+            document.getElementById('resultView').classList.add('hidden');
+            document.getElementById('examView').classList.remove('hidden');
+
+            if (state.finished) {
+                renderResult();
+                return;
+            }
+
+            const q = getCurrentQuestion();
+            if (!q) {
+                renderResult();
+                return;
+            }
+
+            const total = state.questions.length;
+            const idx = state.currentIndex + 1;
+
+            // Progress
+            document.getElementById('qCounter').textContent = `سؤال ${idx} از ${total}`;
+            const answeredCount = Object.values(state.answers).filter(a =>
+                a.status !== 'unanswered' && a.status !== 'skipped'
+            ).length;
+            document.getElementById('answeredCount').textContent = `پاسخ‌داده: ${answeredCount}`;
+            const progressPercent = ((idx - 1) / total) * 100;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+
+            // Meta badges
+            const metaEl = document.getElementById('questionMeta');
+            metaEl.innerHTML = `
+                <span class="badge badge-topic">📚 ${q.topic}</span>
+                <span class="badge badge-level">🧠 ${q.cognitiveLevel}</span>
+                <span class="badge badge-difficulty">📊 ${q.difficulty}</span>
+            `;
+
+            // Question text
+            document.getElementById('questionText').textContent = q.question;
+
+            // Options
+            renderOptions(q);
+
+            // Feedback & buttons
+            renderFeedbackAndButtons(q);
+        }
+
+        function renderOptions(q) {
+            const container = document.getElementById('optionsContainer');
+            const ans = getAnswerState(q.id);
+            const isAnswered = ans.attempts.length > 0;
+            const isDone = ans.status !== 'unanswered' && ans.status !== 'skipped';
+
+            // Determine option order (shuffled or original)
+            let optionIndices = q.options.map((_, i) => i);
+            if (settings.randomizeOptions) {
+                // Use a deterministic shuffle based on question id to keep consistency on re-render
+                // Simple hash-based seed
+                optionIndices = shuffleArray(optionIndices);
+            }
+
+            // Store mapping for this render if not already stored
+            if (!ans.optionOrder) {
+                ans.optionOrder = optionIndices;
+            } else {
+                // Use stored order
+                optionIndices = ans.optionOrder;
+            }
+
+            container.innerHTML = '';
+
+            optionIndices.forEach((optIdx, displayIdx) => {
+                const optionText = q.options[optIdx];
+                const letter = ['الف', 'ب', 'ج', 'د'][displayIdx] || String(displayIdx + 1);
+
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.dataset.optionIndex = optIdx;
+                card.dataset.displayIndex = displayIdx;
+
+                // Highlighting logic
+                if (isDone || ans.showFullAnswer) {
+                    // Show correct answer
+                    if (optIdx === q.correctAnswer) {
+                        card.classList.add('correct-highlight');
+                    }
+                    // Show wrong if user selected and it's not correct
+                    if (ans.selectedOption === optIdx && optIdx !== q.correctAnswer) {
+                        card.classList.add('wrong-highlight');
+                    }
+                    card.classList.add('disabled');
+                } else if (isAnswered && ans.selectedOption === optIdx) {
+                    card.classList.add('selected');
+                } else if (ans.selectedOption === optIdx) {
+                    card.classList.add('selected');
+                }
+
+                // Disable if already done or answered
+                if (isDone || (isAnswered && ans.status !== 'unanswered')) {
+                    card.classList.add('disabled');
+                }
+
+                card.innerHTML = `
+                    <div class="option-letter">${letter}</div>
+                    <div class="option-text">${optionText}</div>
+                `;
+
+                // Click handler
+                if (!isDone && !card.classList.contains('disabled')) {
+                    card.addEventListener('click', () => selectOption(optIdx));
+                }
+
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(optIdx) {
+            const q = getCurrentQuestion();
+            if (!q) return;
+            const ans = getAnswerState(q.id);
+            if (ans.status !== 'unanswered' && ans.status !== 'skipped') return;
+            if (ans.attempts.length >= settings.attemptsPerQuestion) return;
+
+            ans.selectedOption = optIdx;
+            ans.hintShown = false; // reset hint display
+            ans.showFullAnswer = false;
+            saveState();
+            renderExam();
+        }
+
+        function renderFeedbackAndButtons(q) {
+            const ans = getAnswerState(q.id);
+            const feedbackArea = document.getElementById('feedbackArea');
+            const btnGroup = document.getElementById('actionButtons');
+            feedbackArea.innerHTML = '';
+            btnGroup.innerHTML = '';
+
+            const isDone = ans.status !== 'unanswered' && ans.status !== 'skipped';
+            const attemptCount = ans.attempts.length;
+            const maxAttempts = settings.attemptsPerQuestion;
+
+            // Build feedback display
+            let feedbackHTML = '';
+
+            // Show past attempt feedbacks
+            ans.attempts.forEach((att, idx) => {
+                const attemptNum = idx + 1;
+                if (att.correct) {
+                    feedbackHTML += `
+                        <div class="feedback-box success">
+                            <div class="fb-title">✅ پاسخ درست در تلاش ${attemptNum}!</div>
+                            <div class="fb-text">${q.explanation}</div>
+                        </div>
+                    `;
+                } else {
+                    // Wrong attempt feedback
+                    const mis = q.misconceptions.find(m => m.option === att.selectedOption);
+                    let misHTML = '';
+                    if (mis) {
+                        misHTML = `
+                            <div class="feedback-box misconception">
+                                <div class="fb-title">🔍 تشخیص بدفهمی</div>
+                                <div class="fb-text"><strong>${mis.title}:</strong> ${mis.explanation}</div>
+                            </div>
+                        `;
+                    }
+
+                    feedbackHTML += `
+                        <div class="feedback-box error">
+                            <div class="fb-title">❌ این پاسخ درست نیست.</div>
+                            <div class="fb-text">دوباره به رابطه بین داده‌های سؤال فکر کن. ${attemptNum < maxAttempts ? 'هنوز یک فرصت دیگر داری.' : ''}</div>
+                        </div>
+                        ${misHTML}
+                    `;
+
+                    // Show hint
+                    if (idx < q.hints.length) {
+                        feedbackHTML += `
+                            <div class="feedback-box hint">
+                                <div class="fb-title">💡 راهنمایی ${idx + 1}</div>
+                                <div class="fb-text">${q.hints[idx]}</div>
+                            </div>
+                        `;
+                    }
+                }
+            });
+
+            // If done, show final summary if not already shown
+            if (isDone) {
+                if (ans.status === 'correct_first' || ans.status === 'correct_second') {
+                    // Already shown above
+                } else if (ans.status === 'wrong') {
+                    // Show full answer and explanation
+                    feedbackHTML += `
+                        <div class="feedback-box success">
+                            <div class="fb-title">✅ پاسخ صحیح: گزینه ${q.options[q.correctAnswer]}</div>
+                            <div class="fb-text">${q.explanation}</div>
+                        </div>
+                    `;
+                    // Show misconceptions for all wrong attempts
+                    ans.attempts.forEach(att => {
+                        if (!att.correct) {
+                            const mis = q.misconceptions.find(m => m.option === att.selectedOption);
+                            if (mis) {
+                                feedbackHTML += `
+                                    <div class="feedback-box misconception">
+                                        <div class="fb-title">🔍 بدفهمی مرتبط با انتخاب شما</div>
+                                        <div class="fb-text"><strong>${mis.title}:</strong> ${mis.explanation}</div>
+                                    </div>
+                                `;
+                            }
+                        }
+                    });
+                } else if (ans.status === 'skipped') {
+                    feedbackHTML += `
+                        <div class="feedback-box hint">
+                            <div class="fb-title">⏭️ این سؤال رد شد.</div>
+                            <div class="fb-text">پاسخ صحیح: گزینه ${q.options[q.correctAnswer]}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            feedbackArea.innerHTML = feedbackHTML;
+
+            // Buttons
+            if (isDone) {
+                // Continue button
+                const continueBtn = document.createElement('button');
+                continueBtn.className = 'btn btn-primary';
+                continueBtn.textContent = 'ادامه ➡';
+                continueBtn.addEventListener('click', () => {
+                    if (state.currentIndex < state.questions.length - 1) {
+                        state.currentIndex++;
+                        saveState();
+                        renderExam();
+                    } else {
+                        finishExam();
+                    }
+                });
+                btnGroup.appendChild(continueBtn);
+            } else {
+                // Submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'btn btn-primary';
+                submitBtn.textContent = 'ثبت پاسخ';
+                submitBtn.disabled = ans.selectedOption === null;
+                submitBtn.addEventListener('click', () => submitAnswer());
+                btnGroup.appendChild(submitBtn);
+
+                // Hint button (if not shown and attempt count > 0)
+                if (attemptCount > 0 && attemptCount < maxAttempts && !ans.hintShown) {
+                    // Hint is already shown in feedback for wrong attempts, so skip
+                }
+
+                // Retry button (if wrong and still has attempts)
+                if (attemptCount > 0 && attemptCount < maxAttempts) {
+                    const retryBtn = document.createElement('button');
+                    retryBtn.className = 'btn btn-warning';
+                    retryBtn.textContent = 'تلاش مجدد';
+                    retryBtn.addEventListener('click', () => {
+                        ans.selectedOption = null;
+                        ans.hintShown = false;
+                        saveState();
+                        renderExam();
+                    });
+                    btnGroup.appendChild(retryBtn);
+                }
+            }
+
+            // Navigation buttons
+            updateNavButtons();
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const skipBtn = document.getElementById('skipBtn');
+
+            prevBtn.disabled = state.currentIndex === 0;
+            nextBtn.disabled = state.currentIndex >= state.questions.length - 1;
+
+            const q = getCurrentQuestion();
+            if (q) {
+                const ans = getAnswerState(q.id);
+                const isDone = ans.status !== 'unanswered' && ans.status !== 'skipped';
+                skipBtn.disabled = !settings.allowSkip || isDone;
+            }
+        }
+
+        // ================================================================
+        //  SECTION 6: ANSWER SUBMISSION LOGIC
+        // ================================================================
+
+        function submitAnswer() {
+            const q = getCurrentQuestion();
+            if (!q) return;
+            const ans = getAnswerState(q.id);
+            if (ans.selectedOption === null) return;
+            if (ans.attempts.length >= settings.attemptsPerQuestion) return;
+
+            const selected = ans.selectedOption;
+            const isCorrect = selected === q.correctAnswer;
+
+            ans.attempts.push({
+                selectedOption: selected,
+                correct: isCorrect,
+                timestamp: Date.now()
+            });
+
+            if (isCorrect) {
+                if (ans.attempts.length === 1) {
+                    ans.status = 'correct_first';
+                } else {
+                    ans.status = 'correct_second';
+                }
+                ans.showFullAnswer = true;
+            } else {
+                if (ans.attempts.length >= settings.attemptsPerQuestion) {
+                    ans.status = 'wrong';
+                    ans.showFullAnswer = true;
+                } else {
+                    // Still has attempts left
+                    ans.status = 'unanswered'; // remains unanswered but has attempts
+                    ans.showFullAnswer = false;
+                }
+            }
+
+            ans.selectedOption = null; // reset selection for next attempt
+            saveState();
+            renderExam();
+        }
+
+        // ================================================================
+        //  SECTION 7: NAVIGATION
+        // ================================================================
+
+        function goToPrev() {
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                saveState();
+                renderExam();
+            }
+        }
+
+        function goToNext() {
+            if (state.currentIndex < state.questions.length - 1) {
+                state.currentIndex++;
+                saveState();
+                renderExam();
+            }
+        }
+
+        function skipQuestion() {
+            const q = getCurrentQuestion();
+            if (!q) return;
+            const ans = getAnswerState(q.id);
+            if (ans.status !== 'unanswered' && ans.status !== 'skipped') return;
+            if (ans.attempts.length > 0) return; // can't skip after starting
+            ans.status = 'skipped';
+            ans.showFullAnswer = false;
+            saveState();
+            renderExam();
+        }
+
+        // ================================================================
+        //  SECTION 8: FINISH & RESULTS
+        // ================================================================
+
+        function finishExam() {
+            state.finished = true;
+            // Mark all unanswered as unanswered (already are)
+            saveState();
+            renderResult();
+        }
+
+        function calculateResults() {
+            const total = state.questions.length;
+            let correctFirst = 0, correctSecond = 0, wrong = 0, unanswered = 0, skipped = 0;
+            const topicStats = {};
+            const misconceptionCounts = {};
+
+            state.questions.forEach(qId => {
+                const q = getQuestionById(qId);
+                if (!q) return;
+                const ans = state.answers[qId] || { status: 'unanswered' };
+
+                // Topic stats
+                if (!topicStats[q.topic]) {
+                    topicStats[q.topic] = { correct: 0, total: 0, wrong: 0, unanswered: 0 };
+                }
+                topicStats[q.topic].total++;
+
+                switch (ans.status) {
+                    case 'correct_first':
+                        correctFirst++;
+                        topicStats[q.topic].correct++;
+                        break;
+                    case 'correct_second':
+                        correctSecond++;
+                        topicStats[q.topic].correct++;
+                        break;
+                    case 'wrong':
+                        wrong++;
+                        topicStats[q.topic].wrong++;
+                        break;
+                    case 'skipped':
+                        skipped++;
+                        unanswered++;
+                        topicStats[q.topic].unanswered++;
+                        break;
+                    case 'unanswered':
+                    default:
+                        unanswered++;
+                        topicStats[q.topic].unanswered++;
+                        break;
+                }
+
+                // Misconceptions
+                if (ans.attempts) {
+                    ans.attempts.forEach(att => {
+                        if (!att.correct) {
+                            const mis = q.misconceptions.find(m => m.option === att.selectedOption);
+                            if (mis) {
+                                const key = mis.title;
+                                misconceptionCounts[key] = (misconceptionCounts[key] || 0) + 1;
+                            }
+                        }
+                    });
+                }
+            });
+
+            const totalCorrect = correctFirst + correctSecond;
+            const percent = total > 0 ? (totalCorrect / total) * 100 : 0;
+            const score = total > 0 ? (totalCorrect / total) * 20 : 0;
+
+            return {
+                total,
+                correctFirst,
+                correctSecond,
+                wrong,
+                unanswered,
+                skipped,
+                totalCorrect,
+                percent,
+                score,
+                topicStats,
+                misconceptionCounts
+            };
+        }
+
+        function renderResult() {
+            document.getElementById('examView').classList.add('hidden');
+            const resultView = document.getElementById('resultView');
+            resultView.classList.remove('hidden');
+
+            const r = calculateResults();
+
+            // Determine strong and weak topics
+            const topicEntries = Object.entries(r.topicStats).map(([topic, data]) => ({
+                topic,
+                ...data,
+                ratio: data.total > 0 ? data.correct / data.total : 0
+            }));
+
+            const strongTopics = topicEntries
+                .filter(t => t.ratio >= 0.7 && t.total > 0)
+                .sort((a, b) => b.ratio - a.ratio)
+                .map(t => t.topic);
+
+            const weakTopics = topicEntries
+                .filter(t => t.ratio < 0.5 && t.total > 0)
+                .sort((a, b) => a.ratio - b.ratio)
+                .map(t => t.topic);
+
+            // Build misconception list
+            const misEntries = Object.entries(r.misconceptionCounts)
+                .sort((a, b) => b[1] - a[1]);
+
+            // Chart data
+            const chartData = [
+                { label: 'درست تلاش اول', value: r.correctFirst, max: r.total, color: 'green' },
+                { label: 'درست تلاش دوم', value: r.correctSecond, max: r.total, color: 'light-green' },
+                { label: 'غلط', value: r.wrong, max: r.total, color: 'red' },
+                { label: 'بدون پاسخ', value: r.unanswered, max: r.total, color: 'gray' }
+            ];
+
+            let html = `
+                <div class="score-hero">
+                    <div class="score-label">نمره شما از ۲۰</div>
+                    <div class="score-number">${r.score.toFixed(1)}</div>
+                    <div class="score-percent">${r.percent.toFixed(1)}٪ پاسخ صحیح</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-value">${r.total}</div>
+                        <div class="stat-label">تعداد کل سؤال</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-value">${r.totalCorrect}</div>
+                        <div class="stat-label">پاسخ صحیح</div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-value">${r.wrong}</div>
+                        <div class="stat-label">پاسخ غلط</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-value">${r.unanswered}</div>
+                        <div class="stat-label">بدون پاسخ</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-value">${r.correctFirst}</div>
+                        <div class="stat-label">درست در تلاش اول</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-value">${r.correctSecond}</div>
+                        <div class="stat-label">درست در تلاش دوم</div>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>📊 نمودار عملکرد</h3>
+                    <div class="chart-container">
+            `;
+
+            chartData.forEach(item => {
+                const heightPercent = item.max > 0 ? (item.value / item.max) * 100 : 0;
+                const displayHeight = Math.max(heightPercent, 2);
+                html += `
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-value">${item.value}</div>
+                        <div class="chart-bar ${item.color}" style="height: ${displayHeight}%;"></div>
+                        <div class="chart-label">${item.label}</div>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>📝 عملکرد شما</h3>
+                    <p style="margin-bottom: 12px;">تعداد سؤال: <strong>${r.total}</strong></p>
+                    <p>درست در تلاش اول: <strong style="color: var(--success);">${r.correctFirst}</strong></p>
+                    <p>درست در تلاش دوم: <strong style="color: var(--success);">${r.correctSecond}</strong></p>
+                    <p>غلط: <strong style="color: var(--danger);">${r.wrong}</strong></p>
+                    <p>بدون پاسخ: <strong style="color: var(--warning);">${r.unanswered}</strong></p>
+                    <p style="margin-top: 12px;">نمره: <strong>${r.score.toFixed(1)} از ۲۰</strong></p>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>🔍 تحلیل عملکرد</h3>
+            `;
+
+            if (strongTopics.length > 0) {
+                html += `<p style="margin-bottom: 8px;"><strong>مباحثی که عملکرد بهتری داشته‌اید:</strong></p>`;
+                html += `<div class="topic-tags">`;
+                strongTopics.forEach(t => {
+                    html += `<span class="topic-tag good">✅ ${t}</span>`;
+                });
+                html += `</div>`;
+            }
+
+            if (weakTopics.length > 0) {
+                html += `<p style="margin-bottom: 8px;"><strong>مباحثی که نیاز به مرور دارند:</strong></p>`;
+                html += `<div class="topic-tags">`;
+                weakTopics.forEach(t => {
+                    html += `<span class="topic-tag weak">⚠️ ${t}</span>`;
+                });
+                html += `</div>`;
+                html += `<p style="margin-top: 12px; padding: 12px; background: var(--info-bg); border-radius: var(--radius-xs); font-size: 0.92rem;">
+                    پیشنهاد می‌شود قبل از شرکت در آزمون بعدی، مبحث ${weakTopics.join(' و ')} را مرور کنید و چند سؤال کاربردی و استدلالی حل کنید.
+                </p>`;
+            } else if (strongTopics.length === topicEntries.length && topicEntries.length > 0) {
+                html += `<p style="color: var(--success); font-weight: 600;">🎉 عالی! در تمام مباحث عملکرد خوبی داشته‌اید.</p>`;
+            }
+
+            html += `</div>`;
+
+            // Misconceptions
+            html += `
+                <div class="analysis-section">
+                    <h3>🧩 بدفهمی‌های شناسایی‌شده</h3>
+            `;
+
+            if (misEntries.length > 0) {
+                misEntries.forEach(([title, count]) => {
+                    // Find a suggestion
+                    let suggestion = '';
+                    if (title.includes('علامت')) suggestion = 'پیشنهاد: تمرین انتقال عبارت‌ها با تغییر علامت.';
+                    else if (title.includes('ترتیب') || title.includes('عملیات')) suggestion = 'پیشنهاد: مرور اولویت عملیات ریاضی.';
+                    else if (title.includes('نسبت') || title.includes('تناسب')) suggestion = 'پیشنهاد: تمرین مسائل نسبت و تناسب با شکل.';
+                    else if (title.includes('درصد')) suggestion = 'پیشنهاد: تمرین تبدیل درصد به کسر و اعشار.';
+                    else if (title.includes('احتمال')) suggestion = 'پیشنهاد: تمرین محاسبه احتمال رویداد مکمل.';
+                    else if (title.includes('عدد اول') || title.includes('فرد')) suggestion = 'پیشنهاد: مرور اعداد اول و الگوریتم غربال.';
+                    else if (title.includes('توان')) suggestion = 'پیشنهاد: مرور قوانین توان.';
+                    else if (title.includes('محیط') || title.includes('مساحت')) suggestion = 'پیشنهاد: مرور فرمول‌های محیط و مساحت.';
+                    else if (title.includes('معادله')) suggestion = 'پیشنهاد: تمرین حل معادلات خطی.';
+                    else if (title.includes('نمودار')) suggestion = 'پیشنهاد: تمرین خواندن نمودارهای درصدی.';
+                    else suggestion = '';
+
+                    html += `
+                        <div class="misconception-item">
+                            <span>${title}</span>
+                            <span class="count">${count} مورد</span>
+                        </div>
+                        ${suggestion ? `<p style="font-size: 0.82rem; color: var(--gray-500); margin: -4px 0 8px 14px;">${suggestion}</p>` : ''}
+                    `;
+                });
+            } else {
+                html += `<p style="color: var(--success);">🎉 هیچ بدفهمی مشخصی شناسایی نشد.</p>`;
+            }
+
+            html += `</div>`;
+
+            // Restart button
+            html += `
+                <div style="text-align: center; margin-top: 24px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="restartBtn">🔄 شروع دوباره آزمون</button>
+                    <button class="btn btn-outline" id="printBtn">🖨️ چاپ نتیجه</button>
+                </div>
+            `;
+
+            resultView.innerHTML = html;
+
+            // Attach events
+            document.getElementById('restartBtn').addEventListener('click', () => {
+                document.getElementById('confirmModal').classList.remove('hidden');
+            });
+            document.getElementById('printBtn').addEventListener('click', () => {
+                window.print();
+            });
+        }
+
+        // ================================================================
+        //  SECTION 9: MODAL HANDLERS
+        // ================================================================
+
+        function showResumeModal() {
+            document.getElementById('resumeModal').classList.remove('hidden');
+        }
+
+        function hideResumeModal() {
+            document.getElementById('resumeModal').classList.add('hidden');
+        }
+
+        function showConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('hidden');
+        }
+
+        function hideConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+
+        // ================================================================
+        //  SECTION 10: EVENT BINDING & BOOTSTRAP
+        // ================================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for saved state
+            const hasSaved = loadState();
+            if (hasSaved && !state.finished) {
+                showResumeModal();
+            } else if (hasSaved && state.finished) {
+                // Resume to result page
+                renderResult();
+            } else {
+                initExam();
+            }
+
+            // Resume modal buttons
+            document.getElementById('resumeBtn').addEventListener('click', () => {
+                hideResumeModal();
+                resumeExam();
+            });
+
+            document.getElementById('newTestBtn').addEventListener('click', () => {
+                hideResumeModal();
+                clearState();
+                initExam();
+            });
+
+            // Confirm restart modal
+            document.getElementById('confirmRestartBtn').addEventListener('click', () => {
+                hideConfirmModal();
+                clearState();
+                initExam();
+            });
+
+            document.getElementById('cancelRestartBtn').addEventListener('click', () => {
+                hideConfirmModal();
+            });
+
+            // Navigation
+            document.getElementById('prevBtn').addEventListener('click', goToPrev);
+            document.getElementById('nextBtn').addEventListener('click', goToNext);
+
+            document.getElementById('skipBtn').addEventListener('click', skipQuestion);
+
+            document.getElementById('finishExamBtn').addEventListener('click', () => {
+                // Count unanswered
+                const unanswered = state.questions.filter(qId => {
+                    const ans = state.answers[qId];
+                    return !ans || ans.status === 'unanswered' || ans.status === 'skipped';
+                }).length;
+                if (unanswered > 0) {
+                    if (!confirm(`شما ${unanswered} سؤال را پاسخ نداده‌اید. آیا از پایان آزمون مطمئن هستید؟`)) {
+                        return;
+                    }
+                }
+                finishExam();
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (document.getElementById('examView').classList.contains('hidden')) return;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    // RTL: right = previous, left = next
+                    if (e.key === 'ArrowRight') goToPrev();
+                    if (e.key === 'ArrowLeft') goToNext();
+                }
+            });
+        });
+
+        // ================================================================
+        //  SECTION 11: EXPOSE FOR DEBUGGING
+        // ================================================================
+
+        window.__exam = {
+            state,
+            questions,
+            settings,
+            calculateResults,
+            renderResult,
+            initExam,
+            clearState
+        };
+
+    </script>
+</body>
+</html>
